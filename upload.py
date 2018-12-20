@@ -10,10 +10,12 @@ from keys import BUCKET_NAME, S3_ACCESS_KEY_ID, S3_ACCESS_SECRET_KEY
 class Uploader(object):
 
     def __init__(self, flight_id):
-        self.flight_id = flight_id
+        self.flight_id = str(flight_id)
         self.folder = os.path.join(
-            flight_id, datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S'), '{}'
+            self.flight_id, datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S'),
+            '{}'
         )
+        self.upload_count = 0
 
     def upload(self, path):
         data = open(path, 'rb')
@@ -25,3 +27,4 @@ class Uploader(object):
         )
         folder = self.folder.format(os.path.basename(path))
         s3.Bucket(BUCKET_NAME).put_object(Key=folder, Body=data)
+        self.upload_count += 1
