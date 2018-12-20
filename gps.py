@@ -31,15 +31,13 @@ class GPS(object):
     def __init__(self):
         self.gpsp = GpsPoller()
         self.gpsp.start()
-        # flight_id = uuid.uuid4()
-        # counter = 0
 
     def run(self):
         return (
             gpsd.fix.latitude, gpsd.fix.longitude,
             '{} + {}'.format(gpsd.utc, gpsd.fix.time), gpsd.fix.altitude,
             gpsd.fix.eps, gpsd.fix.epx, gpsd.fix.epv, gpsd.fix.ept, gpsd.fix.speed,
-            gpsd.fix.climb, gpsd.fix.track, gpsd.fix.mode, gpsd.satellites
+            gpsd.fix.climb, gpsd.fix.track, gpsd.fix.mode, len(gpsd.satellites)
         )
 
     def close(self):

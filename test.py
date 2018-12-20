@@ -7,6 +7,8 @@ parser = argparse.ArgumentParser(description='Test features')
 parser.add_argument('-u', '--upload', action='store_true', help='Run uploader')
 parser.add_argument('-c', '--camera', action='store_true', help='Test Camera')
 parser.add_argument('-a', '--audio', action='store_true', help='Test Audio record')
+parser.add_argument('-g', '--gps', action='store_true', help='Test GPS')
+parser.add_argument('-g', '--gps', action='store_true', help='Test GPS')
 
 
 if __name__ == '__main__':
@@ -31,3 +33,14 @@ if __name__ == '__main__':
         audio.start()
         time.sleep(10)
         audio.stop()
+
+    if args.gps:
+        from gps import GPS
+        g = GPS()
+        try:
+            while True:
+                gps_vals = g.run()
+                print(gps_vals)
+                time.sleep(1)
+        except(KeyboardInterrupt, SystemExit):
+            print('GPS stopped')
