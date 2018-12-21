@@ -8,7 +8,8 @@ parser.add_argument('-u', '--upload', action='store_true', help='Run uploader')
 parser.add_argument('-c', '--camera', action='store_true', help='Test Camera')
 parser.add_argument('-a', '--audio', action='store_true', help='Test Audio record')
 parser.add_argument('-g', '--gps', action='store_true', help='Test GPS')
-parser.add_argument('-g', '--gps', action='store_true', help='Test GPS')
+parser.add_argument('-hb', '--heartbeat', action='store_true', help='Test HB')
+parser.add_argument('-ac', '--accelerometer', action='store_true', help='Test HB')
 
 
 if __name__ == '__main__':
@@ -44,3 +45,25 @@ if __name__ == '__main__':
                 time.sleep(1)
         except(KeyboardInterrupt, SystemExit):
             print('GPS stopped')
+
+    if args.heartbeat:
+        from heartbeat import HeartBeat
+        hb = HeartBeat()
+        try:
+            while True:
+                bpm = hb.bpm()
+                print(bpm)
+                time.sleep(1)
+        except(KeyboardInterrupt, SystemExit):
+            print('Heartbeat over')
+
+    if args.accelerometer:
+        from accelerometer import Accelerometer
+        ac = Accelerometer()
+        ac.diagnostics()
+        try:
+            while True:
+                accelerometer_vals = ac.run()
+                time.sleep(1)
+        except(KeyboardInterrupt, SystemExit):
+            print('No mas')

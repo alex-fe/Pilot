@@ -63,7 +63,7 @@ class Accelerometer(object):
         # Gravity acceleration data (i.e. acceleration just from gravity--returned
         # in meters per second squared):
         gravx, gravy, gravz = self.bno.read_gravity()
-        self.values.append([
+        return (
             qx, qy, qz, qw,
             temp_c,
             mx, my, mz,
@@ -71,4 +71,4 @@ class Accelerometer(object):
             ax, ay, az,
             lax, lay, laz,
             gravx, gravy, gravz
-        ])
+        )

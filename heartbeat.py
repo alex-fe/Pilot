@@ -8,7 +8,7 @@ def now():
 
 class HeartBeat(object):
     # initialization
-    GAIN = 2 / 3.0
+    GAIN = 2 / 3
     CURENT_STATE = 0
     THRESH = 525  # mid point in the waveform
     P = 512  # P is the peak
@@ -27,7 +27,7 @@ class HeartBeat(object):
         self.adc = Adafruit_ADS1x15.ADS1015()
         self.last_time = now()
 
-    def run(self):
+    def bpm(self):
         # Main loop. use Ctrl-c to stop the code
         signal = self.adc.read_adc(0, gain=self.GAIN)
         current_time = now()
@@ -72,7 +72,7 @@ class HeartBeat(object):
             running_total /= 10  # average the last 10 IBI values
             BPM = 60000 / running_total
             # print('BPM: {}'.format(BPM))
-            yield BPM
+            return BPM
         # when the values are going down, the beat is over
         if signal < self.THRESH and self.PULSE:
             self.PULSE = False  # reset the PULSE flag
@@ -90,4 +90,3 @@ class HeartBeat(object):
             self.LAST_BEAT_TIME = self.SAMPLE_COUNTER
             self.FIRST_BEAT = True
             self.SECOND_BEAT = False
-            print("no beats found")
