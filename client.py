@@ -11,7 +11,7 @@ from upload import Uploader
 
 path = os.path.dirname(os.path.realpath(__file__))
 camera_path = os.path.join(path, '{}_cam.h264'.format(p2_hostname))
-audio_path = os.path.join(path, 'recording.wav')
+audio_path = os.path.join(path, '{}_audio.wav'.format(p2_hostname))
 sql_path = os.path.join(path, '{}.db'.format(p2_hostname))
 
 
@@ -42,5 +42,6 @@ elif command == 'stop':
     u = Uploader(12)
     u.upload(sql_path)
     u.upload(camera_path)
+    u.upload(audio_path)
 else:
     sys.exit("Error! Wrong command '{}' sent.".format(command))
